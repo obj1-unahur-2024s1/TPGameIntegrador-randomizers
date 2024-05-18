@@ -2,7 +2,7 @@
 
 ## Equipo de desarrollo
 
-- Alguien
+- Alguien.
 - Persona
 - etc.
 
