@@ -2,9 +2,10 @@
 
 ## Equipo de desarrollo
 
-- Alguien.
-- Persona
-- etc.
+- Franco Cerantonio.
+- Fernando Cantero 
+- Marcelo Sanchez.
+-
 
 ## Capturas
 
