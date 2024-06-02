@@ -2,17 +2,16 @@ import wollok.game.*
 import autos.*
 
 object juego{
-	const carreteraR1 = new CarreteraR(pos = 2)
-	const carreteraR2 = new CarreteraR(pos = 9)
-	const carreteraL1 = new CarreteraL(pos = 3)
-	const carreteraL2 = new CarreteraL(pos = 10)
+	const carreteraR1 = new Carretera(y = 1, dir = derecha)
+	const carreteraR2 = new Carretera(y = 5, dir = derecha)
+	const carreteraL1 = new Carretera(y = 2, dir = izquierda)
+	const carreteraL2 = new Carretera(y = 6, dir = izquierda)
 	const autos = []
-	var pos = 1
 	var pausado = false
 	method iniciar(){
-		game.cellSize(60)
-		game.width(15)
-		game.height(13)
+		game.cellSize(90)
+		game.width(10)
+		game.height(8)
 		game.title("Salva los huevos")
 		game.addVisual(carreteraR1)
 		game.addVisual(carreteraR2)
@@ -35,19 +34,14 @@ object juego{
 	}
 	
 	method nivel1(){
-		game.addVisual(trenDer)
-		trenDer.conducir()
-		game.addVisual(trenIzq)
-		trenIzq.conducir()
-		autos.add(new Auto(carretera = carreteraR1, x = 2, direccion = derecha ))
-		autos.add(new Auto(carretera = carreteraR1, x = 3, direccion = derecha))
-		autos.add(new Auto(carretera = carreteraL1, x = 4, direccion = izquierda ))
-		autos.add(new Auto(carretera = carreteraL1, x = 8, direccion = izquierda))
-		autos.add(new Auto(carretera = carreteraR2, x = 2, direccion = derecha ))
-		autos.add(new Auto(carretera = carreteraR2, x = 7, direccion = derecha))
-		autos.add(new Auto(carretera = carreteraL2, x = 2, direccion = izquierda ))
-		autos.add(new Auto(carretera = carreteraL2, x = 4, direccion = izquierda))
-		
+		autos.add(new Auto(carretera = carreteraR1, x = 2))
+		autos.add(new Auto(carretera = carreteraR1, x = 3))
+		autos.add(new Auto(carretera = carreteraR2, x = 4))
+		autos.add(new Auto(carretera = carreteraR2, x = 6))
+		autos.add(new Auto(carretera = carreteraL1, x = 2))
+		autos.add(new Auto(carretera = carreteraL1, x = 3))
+		autos.add(new Auto(carretera = carreteraL2, x = 4))
+		autos.add(new Auto(carretera = carreteraL2, x = 6))
 		autos.forEach({a => game.addVisual(a)})
 		autos.forEach({a => a.conducir()})
 	}
@@ -57,7 +51,9 @@ object derecha{
 	method avanzar(pos){
 		return pos.right(1)
 	}
-	method final() = 14
+	method final() = 10
+	method inicio() = 0
+	method img() = "D"
 }
 
 object izquierda{
@@ -65,17 +61,15 @@ object izquierda{
 		return pos.left(1)
 	}
 	method final() = 0
+	method inicio() = 10
+	method img() = "I"
 }
 
-class CarreteraR{
-	const pos
-	method position()= game.at(0,pos)
-	method text() = pos.toString()
-}
 
-class CarreteraL{
-	const pos
-	method position()= game.at(14,pos)
-	method text() = pos.toString()
+class Carretera{
+	const y
+	const dir
+	method position()= game.at(dir.inicio(),y)
+	method dir() = dir
 }
 

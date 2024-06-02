@@ -4,19 +4,17 @@ import juego.*
 class Auto {
 	const carretera
 	const x
-	const direccion
-	var position = game.at(x, carretera.position().y())
+	var property position = game.at(x, carretera.position().y())
 	var pInicial = carretera.position()
-	method image() = "L.png"
-	method position() = position
+	var property image = "A"+carretera.dir().img()+"1.png"
 	method avanzar(){
-		if (self.position().x() == direccion.final()){
+		if (self.position().x() == carretera.dir().final()){
 			position = pInicial
 		}
-		position = direccion.avanzar(position)
+		position = carretera.dir().avanzar(position)
 	}
 	method conducir(){
-		game.onTick(100, "conduc", {self.avanzar()})
+		game.onTick(400, "conduc", {self.avanzar()})
 	}
 	method detener(){
 		game.removeTickEvent("conduc")
