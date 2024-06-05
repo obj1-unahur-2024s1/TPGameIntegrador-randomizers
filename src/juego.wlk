@@ -1,5 +1,7 @@
 import wollok.game.*
 import autos.*
+import gallina.*
+import tablero.*
 
 object juego{
 	const carreteraR1 = new Carretera(y = 1, dir = derecha)
@@ -8,18 +10,20 @@ object juego{
 	const carreteraL2 = new Carretera(y = 6, dir = izquierda)
 	const autos = []
 	var pausado = false
+	var estaJugando = false
 	method iniciar(){
 		game.cellSize(90)
-		game.boardGround("Tabla.png")
-		game.width(10)
-		game.height(8)
+		game.width(12)
+		game.height(9)
 		game.title("Salva los huevos")
 		game.addVisual(carreteraR1)
 		game.addVisual(carreteraR2)
 		game.addVisual(carreteraL1)
 		game.addVisual(carreteraL2)
-		
-		self.nivel1()/*
+		game.addVisual(menu)
+		keyboard.f().onPressDo{self.nivel1()}
+		keyboard.h().onPressDo{self.nivel2()}
+/*
 		keyboard.r().onPressDo({self.pausar()})
 		self.coliciones()*/
 		game.start()	}
@@ -34,19 +38,67 @@ object juego{
 		}
 	}
 	
+	method configurarGallina(){
+		keyboard.right().onPressDo{gallina.moverD()}
+		keyboard.left().onPressDo{gallina.moverI()}
+		keyboard.up().onPressDo{gallina.moverU()}
+		keyboard.down().onPressDo{gallina.moverA()}
+		game.addVisual(gallina)
+		game.onCollideDo(gallina, {auto => auto.colicion()})
+	}
+	
 	method nivel1(){
-		autos.add(trenDer)
-		autos.add(trenIzq)
-		autos.add(new Auto(carretera = carreteraR1, x = 2))
-		autos.add(new Auto(carretera = carreteraR1, x = 3))
-		autos.add(new Auto(carretera = carreteraR2, x = 4))
-		autos.add(new Auto(carretera = carreteraR2, x = 6))
-		autos.add(new Auto(carretera = carreteraL1, x = 2))
-		autos.add(new Auto(carretera = carreteraL1, x = 3))
-		autos.add(new Auto(carretera = carreteraL2, x = 4))
-		autos.add(new Auto(carretera = carreteraL2, x = 6))
-		autos.forEach({a => game.addVisual(a)})
-		autos.forEach({a => a.conducir()})
+		if (!estaJugando){
+			game.removeVisual(menu)
+			game.addVisual(tablero)
+			game.boardGround("fondo(1).jpeg")
+			self.configurarGallina()
+			autos.add(trenDer)
+			autos.add(trenIzq)
+			autos.add(new Auto(carretera = carreteraR1, x = 2))
+			autos.add(new Auto(carretera = carreteraR1, x = 3))
+			autos.add(new Auto(carretera = carreteraR2, x = 4))
+			autos.add(new Auto(carretera = carreteraR2, x = 6))
+			autos.add(new Auto(carretera = carreteraL1, x = 2))
+			autos.add(new Auto(carretera = carreteraL1, x = 3))
+			autos.add(new Auto(carretera = carreteraL2, x = 4))
+			autos.add(new Auto(carretera = carreteraL2, x = 6))
+			autos.forEach({a => game.addVisual(a)})
+			autos.forEach({a => a.conducir(400)})
+			game.addVisual(fondo)
+			estaJugando = true
+		}
+	}
+	
+	method nivel2(){
+		if (!estaJugando){
+			game.removeVisual(menu)
+			game.addVisual(tablero)
+			game.boardGround("fondo(1).jpeg")
+			self.configurarGallina()
+			autos.add(trenDer)
+			autos.add(trenIzq)
+			autos.add(new Auto(carretera = carreteraR1, x = 2))
+			autos.add(new Auto(carretera = carreteraR1, x = 3))
+			autos.add(new Auto(carretera = carreteraR2, x = 4))
+			autos.add(new Auto(carretera = carreteraR2, x = 6))
+			autos.add(new Auto(carretera = carreteraL1, x = 2))
+			autos.add(new Auto(carretera = carreteraL1, x = 3))
+			autos.add(new Auto(carretera = carreteraL2, x = 4))
+			autos.add(new Auto(carretera = carreteraL2, x = 6))
+			autos.add(new Auto(carretera = carreteraR1, x = 5))
+			autos.add(new Auto(carretera = carreteraR1, x = 8))
+			autos.add(new Auto(carretera = carreteraR2, x = 8))
+			autos.add(new Auto(carretera = carreteraR2, x = 7))
+			autos.add(new Auto(carretera = carreteraL1, x = 9))
+			autos.add(new Auto(carretera = carreteraL1, x = 1))
+			autos.add(new Auto(carretera = carreteraL2, x = 2))
+			autos.add(new Auto(carretera = carreteraL2, x = 9))
+			autos.forEach({a => game.addVisual(a)})
+			autos.forEach({a => a.conducir(300)})
+			game.addVisual(fondo)
+			estaJugando = true
+		}
 	}
 }
 
@@ -54,8 +106,8 @@ object derecha{
 	method avanzar(pos){
 		return pos.right(1)
 	}
-	method final() = 10
-	method inicio() = 0
+	method final() = 9
+	method inicio() = -1
 	method img() = "D"
 }
 
@@ -74,5 +126,21 @@ class Carretera{
 	const dir
 	method position()= game.at(dir.inicio(),y)
 	method dir() = dir
+	method colicion(){}
+}
+
+object tablero {
+	method image() = "Tabla.png"
+	method position() = game.origin()
+	method limiteD() = 9
+	method limiteU() = 7
+	method limiteA() = 0
+	method limiteI() = 0
+	method colicion(){}
+}
+
+object fondo{
+	method image() = "fondo(1).jpeg"
+	method position() = game.at(10,0)
 }
 
