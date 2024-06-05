@@ -25,15 +25,15 @@ class Auto {
 }
 
 object trenDer{
-	var position = game.at(-15, 6)
-	var property image = "L.png"
+	var position = game.at(-3, 3)
+	var property image = "TD.png"
 	const vagones = [new Vagon(x = self.position().x()-1,  y = self.position().y(), dir = derecha),
 					new Vagon(x = self.position().x()-2,  y = self.position().y(), dir = derecha),
 					 new Vagon(x = self.position().x() -3,  y = self.position().y(), dir = derecha)]
 	method position() = position
 	method avanzar(){
 		if (self.position().x() == 18){
-			position = game.at(-15,6)
+			position = game.at(-3,3)
 			vagones.forEach({v => v.pInicial()})
 		}
 		position = position.right(1)
@@ -55,15 +55,15 @@ object trenDer{
 }  
 
 object trenIzq{
-	var position = game.at(30, 7)
-	var property image = "L.png"
-	const vagones = [new Vagon(x = self.position().x()-1, y = self.position().y(),dir = izquierda),
-					new Vagon(x = self.position().x()-2, y = self.position().y(),  dir = izquierda),
-					 new Vagon(x = self.position().x() -3,  y = self.position().y(), dir = izquierda)]
+	var position = game.at(13, 4)
+	var property image = "TI.png"
+	const vagones = [new Vagon(x = self.position().x()+1, y = self.position().y(),dir = izquierda),
+					new Vagon(x = self.position().x()+2, y = self.position().y(),  dir = izquierda),
+					 new Vagon(x = self.position().x() +3,  y = self.position().y(), dir = izquierda)]
 	method position() = position
 	method avanzar(){
 		if (self.position().x() == -5){
-			position = game.at(30,7)
+			position = game.at(13,4)
 			vagones.forEach({v => v.pInicial()})
 		}
 		position = position.left(1)
@@ -89,7 +89,7 @@ object trenIzq{
   	const y
   	const dir
   	var property position = game.at(x,y)
-	var property image = "L.png"
+	var property image = "V" + dir.img() + ".png" 
 	method pInicial(){
 		position = game.at(x,y)
 	}

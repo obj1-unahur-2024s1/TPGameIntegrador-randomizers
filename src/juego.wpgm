@@ -3,5 +3,5 @@ import juego.*
 
 program juego {
 
-	game.start()
+	juego.iniciar()
 }

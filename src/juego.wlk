@@ -10,6 +10,7 @@ object juego{
 	var pausado = false
 	method iniciar(){
 		game.cellSize(90)
+		game.boardGround("Tabla.png")
 		game.width(10)
 		game.height(8)
 		game.title("Salva los huevos")
@@ -34,6 +35,8 @@ object juego{
 	}
 	
 	method nivel1(){
+		autos.add(trenDer)
+		autos.add(trenIzq)
 		autos.add(new Auto(carretera = carreteraR1, x = 2))
 		autos.add(new Auto(carretera = carreteraR1, x = 3))
 		autos.add(new Auto(carretera = carreteraR2, x = 4))
