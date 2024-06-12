@@ -21,7 +21,6 @@ object gallina {
 			position = position.left(1)
 			self.animacion(dirMira)
 		}
-		
 	}
 	
 	method moverU(){
@@ -29,6 +28,7 @@ object gallina {
 		if (tablero.limiteU() != self.position().y()){
 			position = position.up(1)
 			self.animacion(dirMira)
+			new Sonido(sonido = "salto.mp3").reproducir()
 			}
 	}
 	
@@ -38,6 +38,7 @@ object gallina {
 			position = position.down(1)
 			self.animacion(dirMira)
 			}
+			
 	}
 	
 	method animacion(dir){

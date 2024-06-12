@@ -21,8 +21,8 @@ object juego{
 		game.addVisual(carreteraL1)
 		game.addVisual(carreteraL2)
 		game.addVisual(menu)
-		keyboard.f().onPressDo{self.nivel1()}
-		keyboard.h().onPressDo{self.nivel2()}
+		keyboard.f().onPressDo{self.nivel1() new Sonido(sonido = "menu-button.mp3").reproducir()}
+		keyboard.h().onPressDo{self.nivel2() new Sonido(sonido = "menu-button.mp3").reproducir()}
 /*
 		keyboard.r().onPressDo({self.pausar()})
 		self.coliciones()*/
@@ -144,3 +144,13 @@ object fondo{
 	method position() = game.at(10,0)
 }
 
+class Sonido{
+	const property sonido 
+	
+	method reproducir(){
+		game.sound(sonido).play()
+	}
+	method parar(){
+		game.sound(sonido).stop()
+	}
+}
