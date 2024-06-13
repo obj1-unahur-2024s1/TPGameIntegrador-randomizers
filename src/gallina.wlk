@@ -12,6 +12,7 @@ object gallina {
 		if (tablero.limiteD() != self.position().x()){
 			position = position.right(1)
 			self.animacion(dirMira)
+			new Sonido(sonido = "salto.mp3").reproducir()
 			}
 	}
 	
@@ -20,8 +21,8 @@ object gallina {
 		if (tablero.limiteI() != self.position().x()){
 			position = position.left(1)
 			self.animacion(dirMira)
+			new Sonido(sonido = "salto.mp3").reproducir()
 		}
-		
 	}
 	
 	method moverU(){
@@ -29,6 +30,7 @@ object gallina {
 		if (tablero.limiteU() != self.position().y()){
 			position = position.up(1)
 			self.animacion(dirMira)
+			new Sonido(sonido = "salto.mp3").reproducir()
 			}
 	}
 	
@@ -37,7 +39,9 @@ object gallina {
 		if (tablero.limiteA() != self.position().y()){
 			position = position.down(1)
 			self.animacion(dirMira)
+			new Sonido(sonido = "salto.mp3").reproducir()
 			}
+			
 	}
 	
 	method animacion(dir){

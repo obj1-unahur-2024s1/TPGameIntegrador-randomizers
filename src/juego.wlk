@@ -11,7 +11,10 @@ object juego{
 	const autos = []
 	var pausado = false
 	var estaJugando = false
+	const sonido = game.sound("Musica pollo.mp3") 
+	
 	method iniciar(){
+		game.schedule(200, { sonido.play()} )
 		game.cellSize(90)
 		game.width(12)
 		game.height(9)
@@ -21,8 +24,8 @@ object juego{
 		game.addVisual(carreteraL1)
 		game.addVisual(carreteraL2)
 		game.addVisual(menu)
-		keyboard.f().onPressDo{self.nivel1()}
-		keyboard.h().onPressDo{self.nivel2()}
+		keyboard.f().onPressDo{self.nivel1() new Sonido(sonido = "menu-button.mp3").reproducir()}
+		keyboard.h().onPressDo{self.nivel2() new Sonido(sonido = "menu-button.mp3").reproducir()}
 /*
 		keyboard.r().onPressDo({self.pausar()})
 		self.coliciones()*/
@@ -39,16 +42,17 @@ object juego{
 	}
 	
 	method configurarGallina(){
-		keyboard.right().onPressDo{gallina.moverD()}
+		keyboard.right().onPressDo{gallina.moverA()}
 		keyboard.left().onPressDo{gallina.moverI()}
 		keyboard.up().onPressDo{gallina.moverU()}
 		keyboard.down().onPressDo{gallina.moverA()}
 		game.addVisual(gallina)
-		game.onCollideDo(gallina, {auto => auto.colicion()})
+		game.onCollideDo(gallina, {auto => auto.colicion() new Sonido(sonido = "Pollo.mp3").reproducir()})
 	}
 	
 	method nivel1(){
 		if (!estaJugando){
+			
 			game.removeVisual(menu)
 			game.addVisual(tablero)
 			game.boardGround("fondo(1).jpeg")
@@ -144,3 +148,13 @@ object fondo{
 	method position() = game.at(10,0)
 }
 
+class Sonido{
+	const property sonido 
+	
+	method reproducir(){
+		game.sound(sonido).play()
+	}
+	method parar(){
+		game.sound(sonido).stop()
+	}
+}
