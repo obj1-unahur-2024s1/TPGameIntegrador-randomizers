@@ -130,7 +130,7 @@ class Carretera{
 }
 
 object tablero {
-	method image() = "Tabla.png"
+	method image() = "Tabla.jpg"
 	method position() = game.origin()
 	method limiteD() = 9
 	method limiteU() = 7

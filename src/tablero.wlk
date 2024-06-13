@@ -1,6 +1,6 @@
 import wollok.game.*
 
 object menu{
-	method image() = "fondo(1).jpeg"
+	method image() = "inicio.jpg"
 	method position() = game.origin()
 }
