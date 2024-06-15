@@ -5,7 +5,7 @@
 - Franco Cerantonio.
 - Fernando Cantero 
 - Marcelo Sanchez.
--
+- Cristian Vidal
 
 ## Capturas
 
