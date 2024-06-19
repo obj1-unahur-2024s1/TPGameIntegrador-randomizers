@@ -42,7 +42,7 @@ object juego{
 	}
 	
 	method configurarGallina(){
-		keyboard.right().onPressDo{gallina.moverA()}
+		keyboard.right().onPressDo{gallina.moverD()}
 		keyboard.left().onPressDo{gallina.moverI()}
 		keyboard.up().onPressDo{gallina.moverU()}
 		keyboard.down().onPressDo{gallina.moverA()}
