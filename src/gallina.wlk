@@ -3,7 +3,8 @@ import juego.*
 import autos.*
 
 object gallina {
-	var sonido = new Sonido(sonido = "salto.mp3")
+	const salto = new Sonido(sonido = "salto.mp3")
+	const grito = new Sonido(sonido = "Pollo.mp3")
 	var property position = game.at(4,0)
 	var dirMira = "U"
 	var property image = "GU1.png"
@@ -44,7 +45,7 @@ object gallina {
 	
 	method animacion(dir){
 		image = "G" + dirMira + "2.png"
-		sonido.reproducir()
+		salto.reproducir()
 		game.schedule(200, {self.imgDef(dir)}
 		)
 	}
@@ -54,7 +55,19 @@ object gallina {
 	}
 	
 	method chocada(){
+		pluma.aparecerEn(self.position().x(), self.position().y())
+		grito.reproducir()
 		position = game.at(4,0)
 	}
 	
+}
+
+object pluma{
+	var property position = game.at(0,0)
+	method image() = "Plumas.png"
+	method aparecerEn(x,y){
+		position = game.at(x,y)
+		game.addVisual(self)
+		game.schedule(100, {game.removeVisual(self)})
+	}
 }

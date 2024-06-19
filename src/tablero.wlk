@@ -1,9 +1,15 @@
 import wollok.game.*
 
 object menu{
-	method image() = "inicio.jpg"
+	var property image = "inicio.jpg"
 	method position() = game.origin()
+	method gameOver(){
+		image = "GameOver.png"
 	}
+	}
+	
+	
+	
 object barraDeVida{
 
 	var property position = game.at(6, 0)

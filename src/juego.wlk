@@ -2,6 +2,7 @@ import wollok.game.*
 import autos.*
 import gallina.*
 import tablero.*
+import nidoYHuevos.*
 
 object juego{
 	const carreteraR1 = new Carretera(y = 1, dir = derecha)
@@ -9,6 +10,7 @@ object juego{
 	const carreteraL1 = new Carretera(y = 2, dir = izquierda)
 	const carreteraL2 = new Carretera(y = 6, dir = izquierda)
 	const autos = []
+	const huevos = [new Huevo(x = 4, y = 7), new Huevo(x = 5, y = 7), new Huevo(x = 6, y = 7)]
 	var pausado = false
 	var estaJugando = false
 	const sonido = game.sound("Musica pollo.mp3") 
@@ -50,18 +52,26 @@ object juego{
 		keyboard.up().onPressDo{gallina.moverU()}
 		keyboard.down().onPressDo{gallina.moverA()}
 		game.addVisual(gallina)
-		game.onCollideDo(gallina, {auto => auto.colicion() new Sonido(sonido = "Pollo.mp3").reproducir()})
+		game.onCollideDo(gallina, {auto => auto.colicion()})
+	}
+	
+	method configuracionDefaut(){
+		    game.removeVisual(menu)
+			game.addVisual(tablero)
+			self.configurarGallina()
+			autos.add(trenDer)
+			autos.add(trenIzq)
+			autos.forEach({a => game.addVisual(a)})
+			autos.forEach({a => a.conducir(400)})
+			game.addVisual(fondo)
+			game.addVisual(fondo2)
+			game.addVisual(nido)
+			huevos.forEach{h => game.addVisual(h)}
+			estaJugando = true
 	}
 	
 	method nivel1(){
 		if (!estaJugando){
-			
-			game.removeVisual(menu)
-			game.addVisual(tablero)
-			game.boardGround("fondo(1).jpeg")
-			self.configurarGallina()
-			autos.add(trenDer)
-			autos.add(trenIzq)
 			autos.add(new Auto(carretera = carreteraR1, x = 2))
 			autos.add(new Auto(carretera = carreteraR1, x = 3))
 			autos.add(new Auto(carretera = carreteraR2, x = 4))
@@ -70,21 +80,12 @@ object juego{
 			autos.add(new Auto(carretera = carreteraL1, x = 3))
 			autos.add(new Auto(carretera = carreteraL2, x = 4))
 			autos.add(new Auto(carretera = carreteraL2, x = 6))
-			autos.forEach({a => game.addVisual(a)})
-			autos.forEach({a => a.conducir(400)})
-			game.addVisual(fondo)
-			estaJugando = true
+			self.configuracionDefaut()
 		}
 	}
 	
 	method nivel2(){
 		if (!estaJugando){
-			game.removeVisual(menu)
-			game.addVisual(tablero)
-			game.boardGround("fondo(1).jpeg")
-			self.configurarGallina()
-			autos.add(trenDer)
-			autos.add(trenIzq)
 			autos.add(new Auto(carretera = carreteraR1, x = 2))
 			autos.add(new Auto(carretera = carreteraR1, x = 3))
 			autos.add(new Auto(carretera = carreteraR2, x = 4))
@@ -101,12 +102,23 @@ object juego{
 			autos.add(new Auto(carretera = carreteraL1, x = 1))
 			autos.add(new Auto(carretera = carreteraL2, x = 2))
 			autos.add(new Auto(carretera = carreteraL2, x = 9))
-			autos.forEach({a => game.addVisual(a)})
-			autos.forEach({a => a.conducir(300)})
-			game.addVisual(fondo)
-			estaJugando = true
+			self.configuracionDefaut()
 		}
 	}
+	
+	method gameOver(){
+		    menu.gameOver()
+			game.addVisual(menu)
+			puntuacion.nuevoPuntaje(155 + contador.tiempo())
+			puntuacion.addVisual()
+			game.removeTickEvent("Contador")
+			autos.forEach{a => a.detener()}
+			autos.forEach{a => game.removeVisual(a)}
+			game.removeVisual(nido)
+			huevos.forEach{h => game.removeVisual(h)}
+			game.removeVisual(gallina)
+		}
+}
 	
 	
 /* Prueba Puntuacion
@@ -116,7 +128,7 @@ object juego{
 		puntuacion.addVisual()
 		game.removeTickEvent("Contador")
 	}*/
-}
+
 
 object derecha{
 	method avanzar(pos){
@@ -156,8 +168,13 @@ object tablero {
 }
 
 object fondo{
-	method image() = "fondo(1).jpeg"
+	method image() = "F1.png"
 	method position() = game.at(10,0)
+}
+
+object fondo2{
+	method image() = "F2.png"
+	method position() = game.at(0,8)
 }
 
 class Sonido{
