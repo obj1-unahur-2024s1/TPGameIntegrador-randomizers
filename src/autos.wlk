@@ -62,8 +62,7 @@ object trenDer{
 	
 	method detener(){
 		game.removeTickEvent("conducTD")
-		vagones.forEach({v => game.removeVisual(v)})
-		game.removeVisual(self)
+        vagones.forEach({v => game.removeVisual(v)})
 	}
 	
 	method addVagones(){
@@ -101,7 +100,6 @@ object trenIzq{
 	method detener(){
 		game.removeTickEvent("conducTL")
 		vagones.forEach({v => game.removeVisual(v)})
-		game.removeVisual(self)
 	}
 	
 	method addVagones(){

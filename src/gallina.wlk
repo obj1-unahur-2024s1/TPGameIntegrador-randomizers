@@ -8,7 +8,8 @@ object gallina {
 	var property position = game.at(4,0)
 	var dirMira = "U"
 	var property image = "GU1.png"
-	
+	var property tieneHuevo = false
+	var huevo 
 	method moverD(){
 		dirMira = "D"
 		if (tablero.limiteD() != self.position().x()){
@@ -58,7 +59,24 @@ object gallina {
 		pluma.aparecerEn(self.position().x(), self.position().y())
 		grito.reproducir()
 		position = game.at(4,0)
+		juego.perderVida()
+		if (self.tieneHuevo()){
+			tieneHuevo = false
+			if (juego.estaJugando()){huevo.addVisual()}
+			huevo = null
+		}
 	}
+	
+	method agarrarHuevo(egg){
+		tieneHuevo = true
+		huevo = egg
+	}
+	method dejarHuevo(){
+		tieneHuevo = false
+		huevo = null
+	}
+	
+
 	
 }
 

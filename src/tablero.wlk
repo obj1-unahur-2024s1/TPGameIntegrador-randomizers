@@ -6,9 +6,26 @@ object menu{
 	method gameOver(){
 		image = "GameOver.png"
 	}
+	method menuInicial(){
+		image = "inicio.jpg"
 	}
 	
+}
+
+class Vida{
+	const x
+	var property image = "Co1.png"
+	method position() = game.at(x, 8)
+	method vidaPerdida() {
+		image = "Co2.png"
+	}
+	method reinicio(){
+		image = "Co1.png"
+	}
+}
 	
+	
+/*	
 	
 object barraDeVida{
 
@@ -45,5 +62,5 @@ class TonyVidas {
 
 	method image() = "tony_fren_vida.png"
 
-}
+} */
 	
