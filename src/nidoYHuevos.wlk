@@ -11,12 +11,19 @@ object nido {
 			img += 1
 			image = "Nido" + img + ".png"
 			gallina.dejarHuevo()
+			self.victoria()
 		}
 	}
 	method default(){
 		image = "Nido0.png"
 		game.addVisual(self)
-		img = 1
+		img = 0
+	}
+	
+	method victoria(){
+		if (img == 3){
+			juego.victoria()
+		}
 	}
 
 }

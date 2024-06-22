@@ -12,7 +12,7 @@ object juego{
 	const vehiculos = []
 	const huevos = [new Huevo(x = 4, y = 7), new Huevo(x = 5, y = 7), new Huevo(x = 6, y = 7)]
 	var pausado = false
-	var property  = false
+	var property estaJugando = false
 	const sonido = game.sound("Musica pollo.mp3") 
 	const corazon1 = new Vida(x = 1)
 	const corazon2 = new Vida(x = 2)
@@ -75,6 +75,7 @@ object juego{
 		}
 		else {
 			vidas -= 1
+			menu.gameOver()
 			self.gameOver()
 		}
 	}
@@ -170,7 +171,7 @@ object juego{
 		    game.removeVisual(tablero)
 			game.addVisual(menu)
 			puntuacion.nuevoPuntaje(155 + contador.tiempo())
-			puntuacion.addVisual()
+			game.addVisual(contador)
 			game.removeTickEvent("Contador")
 			vehiculos.forEach{a => a.detener()}
 			vehiculos.forEach{a => game.removeVisual(a)}
@@ -187,6 +188,11 @@ object juego{
 			game.removeVisual(fondo2)
 			estaJugando = false
 			huevos.forEach{h => h.sacarVisual()}
+		}
+		
+		method victoria(){
+			menu.victoria()
+			self.gameOver()
 		}
 }
 	
