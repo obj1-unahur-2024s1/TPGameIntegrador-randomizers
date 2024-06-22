@@ -7,7 +7,7 @@ object gallina {
 	const grito = new Sonido(sonido = "Pollo.mp3")
 	var property position = game.at(4,0)
 	var dirMira = "U"
-	var property image = "GU1.png"
+	var property image = "GU1false.png"
 	var property tieneHuevo = false
 	var huevo 
 	method moverD(){
@@ -44,8 +44,9 @@ object gallina {
 			
 	}
 	
+	
 	method animacion(dir){
-		image = "G" + dirMira + "2.png"
+		image = "G" + dirMira + "2.png" + tieneHuevo
 		salto.reproducir()
 		game.schedule(200, {self.imgDef(dir)}
 		)

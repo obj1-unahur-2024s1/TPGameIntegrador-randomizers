@@ -3,8 +3,8 @@ import wollok.game.*
 import juego.*
 
 object nido {
-	var img = 1
-	var property image = "Nido1.png"
+	var img = 0
+	var property image = "Nido0.png"
 	method position() = game.origin()
 	method colicion(){
 		if (gallina.tieneHuevo()){
@@ -14,7 +14,7 @@ object nido {
 		}
 	}
 	method default(){
-		image = "Nido1.png"
+		image = "Nido0.png"
 		game.addVisual(self)
 		img = 1
 	}
