@@ -170,8 +170,8 @@ object juego{
 		    reiniciado = true
 		    game.removeVisual(tablero)
 			game.addVisual(menu)
-			puntuacion.nuevoPuntaje(155 + contador.tiempo())
-			game.addVisual(contador)
+			puntuacion.nuevoPuntaje(0.max((vidas * 100) + (nido.cantidadHuevos() * 50) - (contador.tiempo())))
+			puntuacion.addVisual()
 			game.removeTickEvent("Contador")
 			vehiculos.forEach{a => a.detener()}
 			vehiculos.forEach{a => game.removeVisual(a)}
@@ -267,12 +267,10 @@ class Sonido{
 object puntuacion {
 	var property puntos = 0
 	const digitos = [
-		new Decimal(position = new Position(x= 11, y=3)),
-		new Decimal(position = new Position(x= 10, y=3)),
-		new Decimal(position = new Position(x= 9, y=3)),
-		new Decimal(position = new Position(x= 8, y=3)),
-		new Decimal(position = new Position(x= 7, y=3)),
-		new Decimal(position = new Position(x= 6, y=3))
+		new Decimal(position = new Position(x= 10, y=7)),
+		new Decimal(position = new Position(x= 9, y=7)),
+		new Decimal(position = new Position(x= 8, y=7))
+		
 	]
 	method image() = "assets/puntuacion.png"
 	method position() = game.origin()
@@ -293,7 +291,7 @@ object puntuacion {
 	method nuevoPuntaje(puntaje){
 		puntos = puntaje
 		
-		(0..5).forEach({i => 
+		(0..2).forEach({i => 
 			const decimal = puntos % 10
 			digitos.get(i).numero(decimal)
 			puntos = (puntos / 10).truncate(0)}
