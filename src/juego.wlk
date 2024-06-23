@@ -275,6 +275,10 @@ object puntuacion {
 		new Decimal(position = new Position(x= 10, y=7)),
 		new Decimal(position = new Position(x= 9, y=7)),
 		new Decimal(position = new Position(x= 8, y=7))
+<<<<<<< HEAD
+=======
+		
+>>>>>>> c95c67c9148d3b52cb4a2a8ddafd457362bf73df
 	]
 	method image() = "assets/puntuacion.png"
 	method position() = game.origin()
