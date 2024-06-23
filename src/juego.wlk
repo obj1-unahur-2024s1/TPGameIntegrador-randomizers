@@ -53,14 +53,15 @@ object juego{
 	
 	method reiniciar(){
 		if (!estaJugando){
+			puntuacion.removeVisual()
+			game.removeVisual(contador)
+			contador.nuevoContador()
 			if (nivelQueJuega == 1){
 				self.nivel1()
 			}
 			else {
 				self.nivel2()
 			}
-			puntuacion.removeVisual()
-			contador.nuevoContador()
 		}
 	} 
 	
@@ -109,6 +110,7 @@ object juego{
 	}
 	
 	method configuracionDefaut(){
+		    estaJugando = true
 		    vidas = 3
 		    game.removeVisual(menu)
 			game.addVisual(tablero)
@@ -124,7 +126,6 @@ object juego{
 			game.addVisual(corazon1)
 			game.addVisual(corazon2)
 			game.addVisual(corazon3)
-			estaJugando = true
 			contador.nuevoContador()
 	}
 	
@@ -333,4 +334,5 @@ object contador{
 	method nuevoContador(){
 		game.onTick(1000,"Contador",{tiempo = tiempo + 1})
 	}
+	method colicion(){}
 }

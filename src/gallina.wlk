@@ -66,6 +66,7 @@ object gallina {
 	}
 	
 	method chocada(){
+		var pluma = new Pluma()
 		pluma.aparecerEn(self.position().x(), self.position().y())
 		grito.reproducir()
 		position = game.at(4,0)
@@ -90,7 +91,7 @@ object gallina {
 	
 }
 
-object pluma{
+class Pluma{
 	var property position = game.at(0,0)
 	method image() = "Plumas.png"
 	method aparecerEn(x,y){
@@ -98,4 +99,5 @@ object pluma{
 		game.addVisual(self)
 		game.schedule(100, {game.removeVisual(self)})
 	}
+	method colicion(){}
 }

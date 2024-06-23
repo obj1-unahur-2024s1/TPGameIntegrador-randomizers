@@ -12,6 +12,7 @@ object menu{
 	method victoria(){
 		image = "victoria.png"
 	}
+	method colicion(){}
 	
 }
 
