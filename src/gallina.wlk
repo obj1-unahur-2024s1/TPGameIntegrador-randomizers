@@ -69,13 +69,17 @@ object gallina {
 		var pluma = new Pluma()
 		pluma.aparecerEn(self.position().x(), self.position().y())
 		grito.reproducir()
-		position = game.at(4,0)
+		self.posInicial()
 		juego.perderVida()
 		if (self.tieneHuevo()){
 			tieneHuevo = false
 			if (juego.estaJugando()){huevo.addVisual()}
 			huevo = null
 		}
+	}
+	
+	method posInicial(){
+		position = game.at(4,0)
 	}
 	
 	method agarrarHuevo(egg){

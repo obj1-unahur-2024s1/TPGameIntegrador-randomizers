@@ -53,15 +53,17 @@ object juego{
 	
 	method reiniciar(){
 		if (!estaJugando){
-			puntuacion.removeVisual()
-			game.removeVisual(contador)
-			contador.nuevoContador()
+			puntuacion.removeVisual()				
+			puntuacion.reset()
 			if (nivelQueJuega == 1){
 				self.nivel1()
 			}
 			else {
 				self.nivel2()
 			}
+		}
+		else {
+			self.gameOver()
 		}
 	} 
 	
@@ -76,17 +78,17 @@ object juego{
 		}
 		else {
 			vidas -= 1
-			menu.gameOver()
 			self.gameOver()
 		}
 	}
 	
 	method menuInicial(){
 		if (!estaJugando){
+			puntuacion.reset()
+			puntuacion.removeVisual()
 			game.removeVisual(menu)
 			menu.menuInicial()
 			game.addVisual(menu)
-			puntuacion.removeVisual()
 			}
 	}
 	
@@ -94,6 +96,7 @@ object juego{
 	method configurarGallina(){
 		if (!reiniciado){
 			game.addVisual(gallina)
+			gallina.posInicial()
 			keyboard.right().onPressDo{gallina.moverD()}
 			keyboard.left().onPressDo{gallina.moverI()}
 			keyboard.up().onPressDo{gallina.moverU()}
@@ -169,10 +172,11 @@ object juego{
 	
 	method gameOver(){
 		    reiniciado = true
+		    menu.gameOver()
 		    game.removeVisual(tablero)
 			game.addVisual(menu)
-			puntuacion.nuevoPuntaje(155 + contador.tiempo())
-			game.addVisual(contador)
+			puntuacion.nuevoPuntaje(0.max((vidas * 100) + (nido.cantidadHuevos() * 50) - (contador.tiempo())))
+			puntuacion.addVisual()
 			game.removeTickEvent("Contador")
 			vehiculos.forEach{a => a.detener()}
 			vehiculos.forEach{a => game.removeVisual(a)}
@@ -192,8 +196,8 @@ object juego{
 		}
 		
 		method victoria(){
-			menu.victoria()
 			self.gameOver()
+			menu.victoria()
 		}
 }
 	
@@ -268,12 +272,9 @@ class Sonido{
 object puntuacion {
 	var property puntos = 0
 	const digitos = [
-		new Decimal(position = new Position(x= 11, y=3)),
-		new Decimal(position = new Position(x= 10, y=3)),
-		new Decimal(position = new Position(x= 9, y=3)),
-		new Decimal(position = new Position(x= 8, y=3)),
-		new Decimal(position = new Position(x= 7, y=3)),
-		new Decimal(position = new Position(x= 6, y=3))
+		new Decimal(position = new Position(x= 10, y=7)),
+		new Decimal(position = new Position(x= 9, y=7)),
+		new Decimal(position = new Position(x= 8, y=7))
 	]
 	method image() = "assets/puntuacion.png"
 	method position() = game.origin()
@@ -294,11 +295,10 @@ object puntuacion {
 	method nuevoPuntaje(puntaje){
 		puntos = puntaje
 		
-		(0..5).forEach({i => 
+		(0..2).forEach({i => 
 			const decimal = puntos % 10
 			digitos.get(i).numero(decimal)
-			puntos = (puntos / 10).truncate(0)}
-			)
+			puntos = (puntos / 10).truncate(0)})
 		
 	}
 	method sumarPuntos(puntaje){
