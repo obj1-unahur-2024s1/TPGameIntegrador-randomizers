@@ -3,23 +3,16 @@ import wollok.game.*
 import juego.*
 
 object nido {
-<<<<<<< HEAD
 	var property cantidadHuevos  = 0
-=======
-	var cantidadHuevos = 0
->>>>>>> c95c67c9148d3b52cb4a2a8ddafd457362bf73df
+
 	var property image = "Nido0.png"
 	method position() = game.origin()
 	method cantidadHuevos() = cantidadHuevos
 	method colicion(){
 		if (gallina.tieneHuevo()){
-<<<<<<< HEAD
+
 			cantidadHuevos  += 1
 			image = "Nido" + cantidadHuevos  + ".png"
-=======
-			cantidadHuevos += 1
-			image = "Nido" + cantidadHuevos + ".png"
->>>>>>> c95c67c9148d3b52cb4a2a8ddafd457362bf73df
 			gallina.dejarHuevo()
 			self.victoria()
 		}
@@ -27,19 +20,12 @@ object nido {
 	method default(){
 		image = "Nido0.png"
 		game.addVisual(self)
-<<<<<<< HEAD
+
 		cantidadHuevos  = 0
 	}
 	
 	method victoria(){
-		if (cantidadHuevos  == 3){
-=======
-		cantidadHuevos = 0
-	}
-	
-	method victoria(){
 		if (cantidadHuevos == 3){
->>>>>>> c95c67c9148d3b52cb4a2a8ddafd457362bf73df
 			juego.victoria()
 		}
 	}

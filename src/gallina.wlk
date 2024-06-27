@@ -10,37 +10,50 @@ object gallina {
 	var property image = "GU01.png"
 	var property tieneHuevo = false
 	var huevo 
+	var pausado = false
+	
+	method pausado(){
+		pausado = !pausado
+	}
 	method moverD(){
+		if (!pausado){
 		dirMira = "D"
 		if (tablero.limiteD() != self.position().x()){
 			position = position.right(1)
 			self.animacion(dirMira)
 			}
+		}
 	}
 	
 	method moverI(){
+		if (!pausado){
 		dirMira = "I"
 		if (tablero.limiteI() != self.position().x()){
 			position = position.left(1)
 			self.animacion(dirMira)
 		}
+		}
 	}
 	
 	method moverU(){
+		if (!pausado){
 		dirMira = "U"
 		if (tablero.limiteU() != self.position().y()){
 			position = position.up(1)
 			self.animacion(dirMira)
 			
 			}
+		}
 	}
 	
 	method moverA(){
+		if (!pausado){
 		dirMira = "A"
 		if (tablero.limiteA() != self.position().y()){
 			position = position.down(1)
 			self.animacion(dirMira)
 			}
+		}
 			
 	}
 	
