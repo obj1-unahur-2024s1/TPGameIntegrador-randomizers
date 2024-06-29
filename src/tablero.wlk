@@ -1,5 +1,11 @@
 import wollok.game.*
 
+object tablero {
+	method image() = "Tabla.jpg"
+	method position() = game.origin()
+	method colicion(){}
+}
+
 object menu{
 	var property image = "inicio.jpg"
 	method position() = game.origin()
@@ -25,6 +31,7 @@ class Vida{
 	}
 	method reinicio(){
 		image = "Co1.png"
+		game.removeVisual(self)
 	}
 }
 	

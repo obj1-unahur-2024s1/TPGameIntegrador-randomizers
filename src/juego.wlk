@@ -3,6 +3,7 @@ import autos.*
 import gallina.*
 import tablero.*
 import nidoYHuevos.*
+import puntuacion.*
 
 object juego{
 	const carreteraR1 = new Carretera(y = 1, dir = derecha)
@@ -43,6 +44,7 @@ object juego{
 		keyboard.f().onPressDo{if (estaEnMenu){self.nivel1() sonidoBoton.reproducir()}}
 		keyboard.h().onPressDo{if (estaEnMenu){self.nivel2() sonidoBoton.reproducir()}}
     	keyboard.p().onPressDo{self.pausar()}
+    	self.agregarTrenes()
 		game.start()	}
 		
 	method pausar(){
@@ -109,10 +111,10 @@ object juego{
 		if (!reiniciado){
 			game.addVisual(gallina)
 			gallina.posInicial()
-			keyboard.right().onPressDo{gallina.moverD()}
-			keyboard.left().onPressDo{gallina.moverI()}
-			keyboard.up().onPressDo{gallina.moverU()}
-			keyboard.down().onPressDo{gallina.moverA()}
+			keyboard.right().onPressDo{gallina.mover(derecha)}
+			keyboard.left().onPressDo{gallina.mover(izquierda)}
+			keyboard.up().onPressDo{gallina.mover(arriba)}
+			keyboard.down().onPressDo{gallina.mover(abajo)}
 			game.onCollideDo(gallina, {auto => auto.colicion()})
 			}
 		else {
@@ -132,14 +134,6 @@ object juego{
 			game.addVisual(tablero)
 			nido.default()
 			self.configurarGallina()
-			vehiculos.add(new Tren(camino = rieles1, x = rieles1.dir().inicio()))
-			vehiculos.add(new Tren(camino = rieles2, x = rieles2.dir().inicio()))
-			vehiculos.add(new Vagon(camino = rieles1, x = rieles1.dir().inicio()-1))
-			vehiculos.add(new Vagon(camino = rieles1, x = rieles1.dir().inicio()-2))
-			vehiculos.add(new Vagon(camino = rieles1, x = rieles1.dir().inicio()-3))
-			vehiculos.add(new Vagon(camino = rieles2, x = rieles2.dir().inicio()+1))
-			vehiculos.add(new Vagon(camino = rieles2, x = rieles2.dir().inicio()+2))
-			vehiculos.add(new Vagon(camino = rieles2, x = rieles2.dir().inicio()+3))
 			vehiculos.forEach({a => game.addVisual(a)})
 			huevos.forEach{h => h.addVisual()}
 			self.conducirVehiculos()
@@ -151,17 +145,28 @@ object juego{
 			contador.nuevoContador()
 	}
 	
+	method agregarTrenes(){
+		vehiculos.add(new Tren(camino = rieles1, x = rieles1.dir().inicio()))
+			vehiculos.add(new Tren(camino = rieles2, x = rieles2.dir().inicio()))
+			vehiculos.add(new Vagon(camino = rieles1, x = rieles1.dir().inicio()-1))
+			vehiculos.add(new Vagon(camino = rieles1, x = rieles1.dir().inicio()-2))
+			vehiculos.add(new Vagon(camino = rieles1, x = rieles1.dir().inicio()-3))
+			vehiculos.add(new Vagon(camino = rieles2, x = rieles2.dir().inicio()+1))
+			vehiculos.add(new Vagon(camino = rieles2, x = rieles2.dir().inicio()+2))
+			vehiculos.add(new Vagon(camino = rieles2, x = rieles2.dir().inicio()+3))
+	}
+	
 	method nivel1(){
 		if (!estaJugando){
 			nivelQueJuega = 1
 			vehiculos.add(new Auto(camino = carreteraR1, x = 2))
-			vehiculos.add(new Auto(camino = carreteraR1, x = 3))
+			vehiculos.add(new Auto(camino = carreteraR1, x = 5))
 			vehiculos.add(new Auto(camino = carreteraR2, x = 4))
 			vehiculos.add(new Auto(camino = carreteraR2, x = 6))
 			vehiculos.add(new Auto(camino = carreteraL1, x = 2))
-			vehiculos.add(new Auto(camino = carreteraL1, x = 3))
-			vehiculos.add(new Auto(camino = carreteraL2, x = 4))
-			vehiculos.add(new Auto(camino = carreteraL2, x = 6))
+			vehiculos.add(new Auto(camino = carreteraL1, x = 7))
+			vehiculos.add(new Auto(camino = carreteraL2, x = 0))
+			vehiculos.add(new Auto(camino = carreteraL2, x = 3))
 			self.configuracionDefaut()
 		}
 	}
@@ -169,20 +174,20 @@ object juego{
 	method nivel2(){
 		if (!estaJugando){
 			nivelQueJuega = 2
-			vehiculos.add(new Auto(camino = carreteraR1, x = 2))
-			vehiculos.add(new Auto(camino = carreteraR1, x = 3))
+			vehiculos.add(new Auto(camino = carreteraR1, x = 0))
+			vehiculos.add(new Auto(camino = carreteraR1, x = 1))
 			vehiculos.add(new Auto(camino = carreteraR2, x = 4))
 			vehiculos.add(new Auto(camino = carreteraR2, x = 6))
 			vehiculos.add(new Auto(camino = carreteraL1, x = 2))
 			vehiculos.add(new Auto(camino = carreteraL1, x = 3))
 			vehiculos.add(new Auto(camino = carreteraL2, x = 4))
 			vehiculos.add(new Auto(camino = carreteraL2, x = 6))
-			vehiculos.add(new Auto(camino = carreteraR1, x = 5))
-			vehiculos.add(new Auto(camino = carreteraR1, x = 8))
-			vehiculos.add(new Auto(camino = carreteraR2, x = 8))
+			vehiculos.add(new Auto(camino = carreteraR1, x = 4))
+			vehiculos.add(new Auto(camino = carreteraR1, x = 7))
+			vehiculos.add(new Auto(camino = carreteraR2, x = 1))
 			vehiculos.add(new Auto(camino = carreteraR2, x = 7))
 			vehiculos.add(new Auto(camino = carreteraL1, x = 9))
-			vehiculos.add(new Auto(camino = carreteraL1, x = 1))
+			vehiculos.add(new Auto(camino = carreteraL1, x = 0))
 			vehiculos.add(new Auto(camino = carreteraL2, x = 2))
 			vehiculos.add(new Auto(camino = carreteraL2, x = 9))
 			self.configuracionDefaut()
@@ -190,32 +195,33 @@ object juego{
 	}
 	
 	method gameOver(){
-		    reiniciado = true
-		    gallina.posInicial()
-		    menu.gameOver()
-		    game.removeVisual(tablero)
-			game.addVisual(menu)
-			puntuacion.nuevoPuntaje(0.max((vidas * 100) + (nido.cantidadHuevos() * 50) - (contador.tiempo())))
-			puntuacion.addVisual()
-			game.removeTickEvent("Contador")
-			vehiculos.forEach{a => a.detener()}
-			vehiculos.forEach{a => game.removeVisual(a)}
-			game.removeVisual(nido)
-			game.removeVisual(gallina)
-			vehiculos.clear()
-			game.removeVisual(corazon1)
-			game.removeVisual(corazon2)
-			game.removeVisual(corazon3)
-			corazon1.reinicio()
-			corazon2.reinicio()
-			corazon3.reinicio()
-			game.removeVisual(fondo)
-			game.removeVisual(fondo2)
-			estaJugando = false
-			huevos.forEach{h => h.sacarVisual()}
-		}
+		self.removerImagenes()
+		reiniciado = true
+		gallina.posInicial()
+		menu.gameOver()   
+		game.addVisual(menu)
+		puntuacion.nuevoPuntaje(0.max((vidas * 200) + (nido.cantidadHuevos() * 100) - (contador.tiempo())))
+		puntuacion.addVisual()
+		game.removeTickEvent("Contador")
+		vehiculos.forEach{a => a.detener()}
+		vehiculos.forEach{v => if (v.esAuto()){vehiculos.remove(v)}}
+		estaJugando = false
+	}
 		
-		method victoria(){
+	method removerImagenes(){
+		game.removeVisual(tablero)
+		game.removeVisual(nido)
+		game.removeVisual(gallina)
+		corazon1.reinicio()
+		corazon2.reinicio()
+		corazon3.reinicio()
+		huevos.forEach{h => h.sacarVisual()}
+        vehiculos.forEach{a => game.removeVisual(a)}
+		game.removeVisual(fondo)
+		game.removeVisual(fondo2)
+	}
+		
+	method victoria(){
 			self.gameOver()
 			menu.victoria()
 		}
@@ -229,6 +235,7 @@ object derecha{
 	method final() = 9
 	method inicio() = -1
 	method img() = "D"
+	method puedeAvanzar(pos) = pos.x() != self.final()
 } 
 
 object izquierda{
@@ -238,7 +245,28 @@ object izquierda{
 	method final() = 0
 	method inicio() = 10
 	method img() = "I"
+	method puedeAvanzar(pos) = pos.x() != self.final()
 }
+
+object arriba{
+	method avanzar(pos){
+		return pos.up(1)
+	}
+	method final() = 7
+	
+	method img() = "U"
+	method puedeAvanzar(pos) = pos.y() != self.final()
+}
+
+object abajo{
+	method avanzar(pos){
+		return pos.down(1)
+	}
+	method final() = 0
+	method img() = "A"
+	method puedeAvanzar(pos) = pos.y() != self.final()
+}
+
 
 
 class Carretera{
@@ -249,15 +277,6 @@ class Carretera{
 	method colicion(){}
 }
 
-object tablero {
-	method image() = "Tabla.jpg"
-	method position() = game.origin()
-	method limiteD() = 9
-	method limiteU() = 7
-	method limiteA() = 0
-	method limiteI() = 0
-	method colicion(){}
-}
 
 object fondo{
 	method image() = "F1.png"
@@ -280,70 +299,4 @@ class Sonido{
 	}
 }
 
-object puntuacion {
-	var property puntos = 0
-	const digitos = [
-		new Decimal(position = new Position(x= 11, y=7)),
-		new Decimal(position = new Position(x= 10, y=7)),
-		new Decimal(position = new Position(x= 9, y=7))
-	    ]
-	method image() = "assets/puntuacion.png"
-	method position() = game.origin()
-	
-	method addVisual(){
-		if(!game.hasVisual(self)) {
-			game.addVisual(self)
-		}
-		digitos.forEach({d => d.addVisual()})
-	}
-	
-	method removeVisual(){
-		if(game.hasVisual(self)) {
-			game.removeVisual(self)		
-		}
-		digitos.forEach({d => d.removeVisual()})
-	}
-	method nuevoPuntaje(puntaje){
-		puntos = puntaje
-		
-		(0..2).forEach({i => 
-			const decimal = puntos % 10
-			digitos.get(i).numero(decimal)
-			puntos = (puntos / 10).truncate(0)})
-		
-	}
-	method sumarPuntos(puntaje){
-		self.nuevoPuntaje(puntos + puntaje)
-	}
-	
-	method reset(){
-		puntos = 0
-		}
-}
 
-
-class Decimal {
-	var property position 
-	var property numero = 0
-	method addVisual(){
-			game.addVisual(self)		
-		
-	}
-	method removeVisual(){
-		if(game.hasVisual(self)) {
-			game.removeVisual(self)		
-		}
-	}
-		
-	method image() = "assets/"+ numero + ".png"
-}
-
-object contador{
-	const property position = game.origin()
-	var tiempo = 0
-	method tiempo() = tiempo
-	method nuevoContador(){
-		game.onTick(1000,"Contador",{tiempo = tiempo + 1})
-	}
-	method colicion(){}
-}

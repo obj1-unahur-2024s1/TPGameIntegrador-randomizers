@@ -10,7 +10,6 @@ object nido {
 	method cantidadHuevos() = cantidadHuevos
 	method colicion(){
 		if (gallina.tieneHuevo()){
-
 			cantidadHuevos  += 1
 			image = "Nido" + cantidadHuevos  + ".png"
 			gallina.dejarHuevo()

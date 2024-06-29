@@ -6,7 +6,7 @@ object gallina {
 	const salto = new Sonido(sonido = "salto.mp3")
 	const grito = new Sonido(sonido = "Pollo.mp3")
 	var property position = game.at(4,0)
-	var dirMira = "U"
+	var dirMira = abajo
 	var property image = "GU01.png"
 	var property tieneHuevo = false
 	var huevo 
@@ -15,46 +15,14 @@ object gallina {
 	method pausado(){
 		pausado = !pausado
 	}
-	method moverD(){
+	method mover(dir){
 		if (!pausado){
-		dirMira = "D"
-		if (tablero.limiteD() != self.position().x()){
-			position = position.right(1)
+		dirMira = dir
+		if (dirMira.puedeAvanzar(position)){
+			position = dirMira.avanzar(position)
 			self.animacion(dirMira)
 			}
 		}
-	}
-	
-	method moverI(){
-		if (!pausado){
-		dirMira = "I"
-		if (tablero.limiteI() != self.position().x()){
-			position = position.left(1)
-			self.animacion(dirMira)
-		}
-		}
-	}
-	
-	method moverU(){
-		if (!pausado){
-		dirMira = "U"
-		if (tablero.limiteU() != self.position().y()){
-			position = position.up(1)
-			self.animacion(dirMira)
-			
-			}
-		}
-	}
-	
-	method moverA(){
-		if (!pausado){
-		dirMira = "A"
-		if (tablero.limiteA() != self.position().y()){
-			position = position.down(1)
-			self.animacion(dirMira)
-			}
-		}
-			
 	}
 	
 	method imgConOSinHuevo(){
@@ -68,14 +36,14 @@ object gallina {
 	
 	
 	method animacion(dir){
-		image = "G" + dirMira + self.imgConOSinHuevo().toString() + "2.png"
+		image = "G" + dir.img() + self.imgConOSinHuevo().toString() + "2.png"
 		salto.reproducir()
 		game.schedule(200, {self.imgDef(dir)}
 		)
 	}
 	
 	method imgDef(dir){
-		image = "G" + dir + self.imgConOSinHuevo().toString() + "1.png"
+		image = "G" + dir.img() + self.imgConOSinHuevo().toString() + "1.png"
 	}
 	
 	method chocada(){
