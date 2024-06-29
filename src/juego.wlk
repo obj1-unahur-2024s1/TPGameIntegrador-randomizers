@@ -18,10 +18,6 @@ object juego{
 	var property estaJugando = false
 	const sonido = game.sound("Musica pollo.mp3") 
 	const sonidoBoton = new Sonido(sonido = "menu-button.mp3")
-	const corazon1 = new Vida(x = 1)
-	const corazon2 = new Vida(x = 2)
-	const corazon3 = new Vida(x = 3)
-	var vidas = 0
 	var reiniciado = false
 	var nivelQueJuega
 	var estaEnMenu = true
@@ -68,8 +64,10 @@ object juego{
 			puntuacion.removeVisual()				
 			puntuacion.reset()
 			gallina.posInicial()
+			barraDeVida.reinicio()
 			if (nivelQueJuega == 1){
 				self.nivel1()
+				
 			}
 			else {
 				self.nivel2()
@@ -79,21 +77,6 @@ object juego{
 			self.gameOver()
 		}
 	} 
-	
-	method perderVida(){
-		if (vidas == 3){
-			corazon3.vidaPerdida()
-			vidas -= 1
-		}
-		else if (vidas == 2){
-			corazon2.vidaPerdida()
-			vidas -= 1
-		}
-		else {
-			vidas -= 1
-			self.gameOver()
-		}
-	}
 	
 	method menuInicial(){
 		if (!estaJugando){
@@ -126,10 +109,9 @@ object juego{
 		vehiculos.forEach({a => a.conducir(400)})
 	}
 	
-	method configuracionDefaut(){
+	method configuracionDefault(){
 		    estaEnMenu = false
 		    estaJugando = true
-		    vidas = 3
 		    game.removeVisual(menu)
 			game.addVisual(tablero)
 			nido.default()
@@ -139,9 +121,7 @@ object juego{
 			self.conducirVehiculos()
 			game.addVisual(fondo)
 			game.addVisual(fondo2)
-			game.addVisual(corazon1)
-			game.addVisual(corazon2)
-			game.addVisual(corazon3)
+			barraDeVida.addVisual()
 			contador.nuevoContador()
 	}
 	
@@ -167,7 +147,7 @@ object juego{
 			vehiculos.add(new Auto(camino = carreteraL1, x = 7))
 			vehiculos.add(new Auto(camino = carreteraL2, x = 0))
 			vehiculos.add(new Auto(camino = carreteraL2, x = 3))
-			self.configuracionDefaut()
+			self.configuracionDefault()
 		}
 	}
 	
@@ -190,7 +170,7 @@ object juego{
 			vehiculos.add(new Auto(camino = carreteraL1, x = 0))
 			vehiculos.add(new Auto(camino = carreteraL2, x = 2))
 			vehiculos.add(new Auto(camino = carreteraL2, x = 9))
-			self.configuracionDefaut()
+			self.configuracionDefault()
 		}
 	}
 	
@@ -200,7 +180,7 @@ object juego{
 		gallina.posInicial()
 		menu.gameOver()   
 		game.addVisual(menu)
-		puntuacion.nuevoPuntaje(0.max((vidas * 200) + (nido.cantidadHuevos() * 100) - (contador.tiempo())))
+		puntuacion.nuevoPuntaje(puntuacion.calculoPuntaje())
 		puntuacion.addVisual()
 		game.removeTickEvent("Contador")
 		vehiculos.forEach{a => a.detener()}
@@ -212,9 +192,7 @@ object juego{
 		game.removeVisual(tablero)
 		game.removeVisual(nido)
 		game.removeVisual(gallina)
-		corazon1.reinicio()
-		corazon2.reinicio()
-		corazon3.reinicio()
+		barraDeVida.removeVisual()
 		huevos.forEach{h => h.sacarVisual()}
         vehiculos.forEach{a => game.removeVisual(a)}
 		game.removeVisual(fondo)

@@ -1,12 +1,13 @@
 import juego.*
 import wollok.game.*
-
+import tablero.*
+import nidoYHuevos.*
 object puntuacion {
 	var property puntos = 0
 	const digitos = [
-		new Decimal(position = new Position(x= 11, y=7)),
 		new Decimal(position = new Position(x= 10, y=7)),
-		new Decimal(position = new Position(x= 9, y=7))
+		new Decimal(position = new Position(x= 9, y=7)),
+		new Decimal(position = new Position(x= 8, y=7))
 	    ]
 	method position() = game.origin()
 	
@@ -36,6 +37,9 @@ object puntuacion {
 	method reset(){
 		puntos = 0
 		}
+	method calculoPuntaje(){
+		return 0.max((barraDeVida.cantidadDeVidas() * 200) + (nido.cantidadHuevos() * 100) - (contador.tiempo()))
+	}
 }
 
 
