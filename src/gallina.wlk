@@ -57,6 +57,7 @@ object gallina {
 			if (juego.estaJugando()){huevo.addVisual()}
 			huevo = null
 		}
+		image = "GU01.png"
 	}
 	
 	method posInicial(){

@@ -41,8 +41,8 @@ class Auto inherits Vehiculo{
 	}
 	
 	override method avanzar(){
-		super()
 		self.animacion()
+		super()
 	}
 	
 	override method esAuto() = true

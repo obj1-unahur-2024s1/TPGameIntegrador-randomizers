@@ -34,6 +34,16 @@ class Vida{
 		game.removeVisual(self)
 	}
 }
+
+object fondo{
+	method image() = "F1.png"
+	method position() = game.at(10,0)
+}
+
+object fondo2{
+	method image() = "F2.png"
+	method position() = game.at(0,8)
+}
 	
 	
 

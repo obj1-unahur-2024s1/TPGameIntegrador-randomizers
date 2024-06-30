@@ -1,6 +1,57 @@
+import juego.*
+import autos.*
 
-test "testX" {
-
-	assert.that(true)
-
+describe "test de juego" {
+	const a1 = new Auto(camino = juego.carreteraR1(), x = 0)
+	const a2 = new Auto(camino = juego.carreteraR2(), x = 0)
+	const t1 = new Tren(camino = juego.rieles1(), x = 0)
+	
+	test "se le pregunta a juego si tiene 0 vidas y responde true" {
+	assert.equals(0, juego.vidas())
+	}
+	test "se le pregunta a juego si esta reiniciado y responde true"{
+		assert.equals(false, juego.reiniciado())
+	}
+	test "se le pregunta a juego el nivel que juega y responde null"{
+		assert.equals(null, juego.nivelQueJuega())
+	}
+	test "se le pregunta a juego si esta en menu y responde true"{
+		assert.equals(true, juego.estaEnMenu())
+	}
+	test "se le pregunta a juego si esta pausado y responde false"{
+		assert.equals(false, juego.estaJugando())
+	}
+	test "se le pregunta juego cuantos vehiculos tiene y responde 0"{
+		assert.equals(0, juego.vehiculosSize())
+	}
+	
+    test "se le agrega a juego un auto y ahora tiene un vehiculo"{
+		juego.agregarVehiculos([a1])
+		assert.equals(1, juego.vehiculosSize())
+	}
+	
+	test "se le agrega a juego dos autos y un tren y se le quitan los autos y tiene solo un vehiculo"{
+		juego.agregarVehiculos([a1, a2, t1])
+		juego.quitarAutos()
+		assert.equals(1, juego.vehiculosSize())
+	}
+	
+	test "se agregan los trenes a juego y ahora tiene 8 vehiculos"{
+		juego.agregarTrenes()
+		assert.equals(8, juego.vehiculosSize())
+	}
+	
+	test "se le agregan 3 vidas a juego y tiene 3"{
+		juego.vidasDefault()
+		assert.equals(3, juego.vidas())
+	}
+	
+	test "se le agregan 3 vidas a juego y pierde 1 tiene 2"{
+		juego.vidasDefault()
+		juego.perderVida()
+		assert.equals(2, juego.vidas())
+	}
 }
+
+
+
