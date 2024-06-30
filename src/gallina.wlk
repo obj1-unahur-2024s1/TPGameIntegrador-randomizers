@@ -1,6 +1,7 @@
 import wollok.game.*
 import juego.*
 import autos.*
+import tablero.*
 
 object gallina {
 	const salto = new Sonido(sonido = "salto.mp3")
@@ -51,7 +52,7 @@ object gallina {
 		pluma.aparecerEn(self.position().x(), self.position().y())
 		grito.reproducir()
 		self.posInicial()
-		juego.perderVida()
+		barraDeVida.perderVida()
 		if (self.tieneHuevo()){
 			tieneHuevo = false
 			if (juego.estaJugando()){huevo.addVisual()}
