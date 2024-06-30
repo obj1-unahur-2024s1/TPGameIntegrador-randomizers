@@ -2,6 +2,7 @@ import juego.*
 import wollok.game.*
 import tablero.*
 import nidoYHuevos.*
+
 object puntuacion {
 	var property puntos = 0
 	const digitos = [
@@ -38,7 +39,7 @@ object puntuacion {
 		puntos = 0
 		}
 	method calculoPuntaje(){
-		return 0.max((barraDeVida.cantidadDeVidas() * 200) + (nido.cantidadHuevos() * 100) - (contador.tiempo()))
+		return 0.max((barraDeVida.vidas() * 200) + (nido.cantidadHuevos() * 100) - (contador.tiempo()))
 	}
 }
 

@@ -37,8 +37,7 @@ class Vida{
 
 object barraDeVida{
 	const corazones = [new Vida(x = 1), new Vida(x = 2),new Vida(x = 3)]
-	var vidas = 3
-	method cantidadDeVidas() = vidas
+	var property vidas = 3
 	method addVisual(){
 		corazones.forEach{ corazon => game.addVisual(corazon)
 		}
@@ -64,6 +63,9 @@ object barraDeVida{
 			vidas -= 1
 			juego.gameOver()
 		}
+	}
+	method perderVidas(){
+		vidas = 0
 	}
 }
 

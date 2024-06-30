@@ -6,7 +6,6 @@ import nidoYHuevos.*
 import puntuacion.*
 
 object juego{
-	var property vidas = 0
 	var property reiniciado = false
 	var property nivelQueJuega = null
 	var property estaEnMenu = true	
@@ -14,7 +13,6 @@ object juego{
 	var property estaJugando = false
 	const sonido = game.sound("Musica pollo.mp3")
 	const sonidoBoton = new Sonido(sonido = "menu-button.mp3")
-<<<<<<< HEAD
 	const property carreteraR1 = new Carretera(y = 1, dir = derecha)
 	const property carreteraR2 = new Carretera(y = 5, dir = derecha)
 	const property carreteraL1 = new Carretera(y = 2, dir = izquierda)
@@ -23,14 +21,6 @@ object juego{
 	const property rieles2 = new Carretera(y = 4, dir = izquierda)
 	const vehiculos = []
 	const huevos = [new Huevo(x = 4, y = 7), new Huevo(x = 5, y = 7), new Huevo(x = 6, y = 7)] 
-	const corazon1 = new Vida(x = 1)
-	const corazon2 = new Vida(x = 2)
-	const corazon3 = new Vida(x = 3)
-=======
-	var reiniciado = false
-	var nivelQueJuega
-	var estaEnMenu = true
->>>>>>> 648e8b51df9e719ddf22f4d257d91615771d9a3e
 	
 	method iniciar(){
 		game.schedule(200, { sonido.play()} )
@@ -70,30 +60,21 @@ object juego{
 	}
 	
 	method reiniciar(){
-<<<<<<< HEAD
 		if (!estaEnMenu){
 			if (!estaJugando){
 				puntuacion.removeVisual()				
 				puntuacion.reset()
 				gallina.posInicial()
+				barraDeVida.reinicio()
 				if (nivelQueJuega == 1){
 					self.nivel1()
 				}
 				else {
 					self.nivel2()
 				}
-=======
-		if (!estaJugando){
-			puntuacion.removeVisual()				
-			puntuacion.reset()
-			gallina.posInicial()
-			barraDeVida.reinicio()
-			if (nivelQueJuega == 1){
-				self.nivel1()
-				
->>>>>>> 648e8b51df9e719ddf22f4d257d91615771d9a3e
 			}
 			else {
+				barraDeVida.perderVidas()
 				self.gameOver()
 			}
 		}
@@ -129,13 +110,8 @@ object juego{
 	method conducirVehiculos(){
 		vehiculos.forEach({a => a.conducir(400)})
 	}
-	
-<<<<<<< HEAD
-	method configuracionDefaut(){
-		    self.vidasDefault()
-=======
+		    
 	method configuracionDefault(){
->>>>>>> 648e8b51df9e719ddf22f4d257d91615771d9a3e
 		    estaEnMenu = false
 		    estaJugando = true
 		    game.removeVisual(menu)
@@ -162,31 +138,18 @@ object juego{
 	method nivel1(){
 		if (!estaJugando){
 			nivelQueJuega = 1
-<<<<<<< HEAD
 			self.agregarVehiculos([new Auto(camino = carreteraR1, x = 2), new Auto(camino = carreteraR1, x = 5), 
 								   new Auto(camino = carreteraR2, x = 4), new Auto(camino = carreteraR2, x = 6), 
 								   new Auto(camino = carreteraL1, x = 2), new Auto(camino = carreteraL1, x = 7), 
 				                   new Auto(camino = carreteraL2, x = 0), new Auto(camino = carreteraL2, x = 3) 
 				                  ])
-			self.configuracionDefaut()
-=======
-			vehiculos.add(new Auto(camino = carreteraR1, x = 2))
-			vehiculos.add(new Auto(camino = carreteraR1, x = 5))
-			vehiculos.add(new Auto(camino = carreteraR2, x = 4))
-			vehiculos.add(new Auto(camino = carreteraR2, x = 6))
-			vehiculos.add(new Auto(camino = carreteraL1, x = 2))
-			vehiculos.add(new Auto(camino = carreteraL1, x = 7))
-			vehiculos.add(new Auto(camino = carreteraL2, x = 0))
-			vehiculos.add(new Auto(camino = carreteraL2, x = 3))
 			self.configuracionDefault()
->>>>>>> 648e8b51df9e719ddf22f4d257d91615771d9a3e
 		}
 	}
 	
 	method nivel2(){
 		if (!estaJugando){
 			nivelQueJuega = 2
-<<<<<<< HEAD
 			self.agregarVehiculos([new Auto(camino = carreteraR1, x = 0), new Auto(camino = carreteraR1, x = 1),
 								   new Auto(camino = carreteraR2, x = 4), new Auto(camino = carreteraR2, x = 6),
 								   new Auto(camino = carreteraL1, x = 2), new Auto(camino = carreteraL1, x = 3),
@@ -196,26 +159,7 @@ object juego{
 								   new Auto(camino = carreteraL1, x = 9), new Auto(camino = carreteraL1, x = 0),
 				                   new Auto(camino = carreteraL2, x = 2), new Auto(camino = carreteraL2, x = 9)
 								  ])
-			self.configuracionDefaut()
-=======
-			vehiculos.add(new Auto(camino = carreteraR1, x = 0))
-			vehiculos.add(new Auto(camino = carreteraR1, x = 1))
-			vehiculos.add(new Auto(camino = carreteraR2, x = 4))
-			vehiculos.add(new Auto(camino = carreteraR2, x = 6))
-			vehiculos.add(new Auto(camino = carreteraL1, x = 2))
-			vehiculos.add(new Auto(camino = carreteraL1, x = 3))
-			vehiculos.add(new Auto(camino = carreteraL2, x = 4))
-			vehiculos.add(new Auto(camino = carreteraL2, x = 6))
-			vehiculos.add(new Auto(camino = carreteraR1, x = 4))
-			vehiculos.add(new Auto(camino = carreteraR1, x = 7))
-			vehiculos.add(new Auto(camino = carreteraR2, x = 1))
-			vehiculos.add(new Auto(camino = carreteraR2, x = 7))
-			vehiculos.add(new Auto(camino = carreteraL1, x = 9))
-			vehiculos.add(new Auto(camino = carreteraL1, x = 0))
-			vehiculos.add(new Auto(camino = carreteraL2, x = 2))
-			vehiculos.add(new Auto(camino = carreteraL2, x = 9))
 			self.configuracionDefault()
->>>>>>> 648e8b51df9e719ddf22f4d257d91615771d9a3e
 		}
 	}
 	
@@ -255,9 +199,6 @@ object juego{
 	}
 	method quitarAutos(){
 		vehiculos.forEach{v => if (v.esAuto()){vehiculos.remove(v)}}
-	}
-	method vidasDefault(){
-		vidas = 3
 	}
 }
 

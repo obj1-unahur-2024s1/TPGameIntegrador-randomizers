@@ -6,9 +6,6 @@ describe "test de juego" {
 	const a2 = new Auto(camino = juego.carreteraR2(), x = 0)
 	const t1 = new Tren(camino = juego.rieles1(), x = 0)
 	
-	test "se le pregunta a juego si tiene 0 vidas y responde true" {
-	assert.equals(0, juego.vidas())
-	}
 	test "se le pregunta a juego si esta reiniciado y responde true"{
 		assert.equals(false, juego.reiniciado())
 	}
@@ -41,16 +38,6 @@ describe "test de juego" {
 		assert.equals(8, juego.vehiculosSize())
 	}
 	
-	test "se le agregan 3 vidas a juego y tiene 3"{
-		juego.vidasDefault()
-		assert.equals(3, juego.vidas())
-	}
-	
-	test "se le agregan 3 vidas a juego y pierde 1 tiene 2"{
-		juego.vidasDefault()
-		juego.perderVida()
-		assert.equals(2, juego.vidas())
-	}
 }
 
 
