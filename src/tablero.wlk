@@ -8,13 +8,13 @@ object tablero {
 }
 
 object menu{
-	var property image = "inicio.jpg"
+	var property image = "inicio.png"
 	method position() = game.origin()
 	method gameOver(){
 		image = "GameOver.png"
 	}
 	method menuInicial(){
-		image = "inicio.jpg"
+		image = "inicio.png"
 	}
 	method victoria(){
 		image = "victoria.png"
