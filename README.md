@@ -9,7 +9,7 @@
 
 ## Capturas
 
-![captura del menu de tablero del juego con la gallina en mitad de la calle  ](https://github.com/obj1-unahur-2024s1/TPGameIntegrador-randomizers/blob/master/assets/inicio.jpg?raw=true)
+![captura del menu de tablero del juego con la gallina en mitad de la calle  ](https://github.com/obj1-unahur-2024s1/TPGameIntegrador-randomizers/blob/master/assets/inicio.png?raw=true)
 ![captura del juego](https://github.com/obj1-unahur-2024s1/TPGameIntegrador-randomizers/blob/master/assets/captura1.jpeg?raw=true)
 
 ![captura del juego2](https://github.com/obj1-unahur-2024s1/TPGameIntegrador-randomizers/blob/master/assets/captura2.jpeg?raw=true)
