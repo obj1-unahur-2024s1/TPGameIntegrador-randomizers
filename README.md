@@ -17,8 +17,11 @@
 
 
 ## Reglas de Juego / Instrucciones
-
-Debes rescatar los 3 huevos que estan del otro lado de la calle uno por uno y dejarlos en el nido. Una vez los 3 huevos esten el nido habras ganado, pero si te quedas sin vidas tentra que reintentarlo
+Una vez los 3 huevos esten el nido habras ganado, pero si te quedas sin vidas a causa de los vehiculos que circulan por las calles atropellando todo a su paso, no te quedara otra que volver a intentarlo, claro tambien esta la opcion de rendirse :V.
+El juego cuenta con dos niveles de dificultad a los que puedes acceder a traves del menu principal:
+  Con la tecla F podras acceder al nivel facil y con la H al difícil(dicen que solo una persona pudo terminar ese nivel luego de 4 horas)
+Con las flechas del teclado seras capaz de mover a nuestra mamá gallina.
+Y para terminar con la tecla P puedes puasar el juego y con la R podras rendirte e reiniciar un nivel.
 
 
 ## Otros
