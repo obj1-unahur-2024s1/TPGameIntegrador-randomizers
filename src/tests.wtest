@@ -4,7 +4,7 @@ import autos.*
 describe "test de juego" {
 	const a1 = new Auto(camino = juego.carreteraR1(), x = 0)
 	const a2 = new Auto(camino = juego.carreteraR2(), x = 0)
-	const t1 = new Tren(camino = juego.rieles1(), x = 0)
+	const t1 = new Tren(camino = juego.rieles1(), x = 0, vagones = [ new Vagon(camino = juego.rieles1(), x = 0)])
 	
 	test "se le pregunta a juego si esta reiniciado y responde true"{
 		assert.equals(false, juego.reiniciado())
@@ -33,9 +33,9 @@ describe "test de juego" {
 		assert.equals(1, juego.vehiculosSize())
 	}
 	
-	test "se agregan los trenes a juego y ahora tiene 8 vehiculos"{
+	test "se agregan los trenes a juego y ahora tiene 2 vehiculos"{
 		juego.agregarTrenes()
-		assert.equals(8, juego.vehiculosSize())
+		assert.equals(2, juego.vehiculosSize())
 	}
 	
 }

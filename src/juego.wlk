@@ -44,6 +44,7 @@ object juego{
 		game.start()	}
 		
 	method pausar(){
+		if (estaJugando){
 		gallina.pausado()
 		if (pausado){
 			self.conducirVehiculos()
@@ -57,9 +58,13 @@ object juego{
 			pausado = !pausado
 			game.removeTickEvent("Contador")
 		}
+		}
 	}
 	
 	method reiniciar(){
+		if (pausado){
+			self.pausar()
+		}
 		if (!estaEnMenu){
 			if (!estaJugando){
 				puntuacion.removeVisual()				
@@ -118,20 +123,21 @@ object juego{
 			game.addVisual(tablero)
 			nido.default()
 			self.configurarGallina()
-			vehiculos.forEach({a => game.addVisual(a)})
+			vehiculos.forEach({a => a.addVisual()})
 			huevos.forEach{h => h.addVisual()}
 			self.conducirVehiculos()
 			game.addVisual(fondo)
 			game.addVisual(fondo2)
 			barraDeVida.addVisual()
 			contador.nuevoContador()
+			barraDeVida.reinicio()
 	}
 	
 	method agregarTrenes(){
-		self.agregarVehiculos([new Tren(camino = rieles1, x = rieles1.dir().inicio()), new Tren(camino = rieles2, x = rieles2.dir().inicio()),
-							   new Vagon(camino = rieles1, x = rieles1.dir().inicio()-1), new Vagon(camino = rieles1, x = rieles1.dir().inicio()-2),
-							   new Vagon(camino = rieles1, x = rieles1.dir().inicio()-3), new Vagon(camino = rieles2, x = rieles2.dir().inicio()+1),
-							   new Vagon(camino = rieles2, x = rieles2.dir().inicio()+2), new Vagon(camino = rieles2, x = rieles2.dir().inicio()+3)
+		self.agregarVehiculos([new Tren(camino = rieles1, x = rieles1.dir().inicio(), vagones = [ new Vagon(camino = rieles1, x = rieles1.dir().inicio()-1), new Vagon(camino = rieles1, x = rieles1.dir().inicio()-2),
+							   new Vagon(camino = rieles1, x = rieles1.dir().inicio()-3)]),
+							   new Tren(camino = rieles2, x = rieles2.dir().inicio(), vagones = [new Vagon(camino = rieles2, x = rieles2.dir().inicio()+1),
+							   new Vagon(camino = rieles2, x = rieles2.dir().inicio()+2), new Vagon(camino = rieles2, x = rieles2.dir().inicio()+3)]) 
 			                  ])
 	}
 	
@@ -183,7 +189,7 @@ object juego{
 		game.removeVisual(gallina)
 		barraDeVida.removeVisual()
 		huevos.forEach{h => h.sacarVisual()}
-        vehiculos.forEach{a => game.removeVisual(a)}
+        vehiculos.forEach{a => a.removeVisual()}
 		game.removeVisual(fondo)
 		game.removeVisual(fondo2)
 	}

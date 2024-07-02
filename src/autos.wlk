@@ -16,11 +16,11 @@ class Vehiculo{
 	}
 	
 	method conducir(time){
-		game.onTick(time, "conduc", {self.avanzar()})
+		game.onTick(time, self.identity().toString(), {self.avanzar()})
 	}
 	
 	method detener(){
-		game.removeTickEvent("conduc")
+		game.removeTickEvent(self.identity().toString())
 	}
 	
 	method colicion() {
@@ -28,12 +28,22 @@ class Vehiculo{
 	}
 	
 	method esAuto() = false
+	
+	method addVisual(){
+		game.addVisual(self)
+	}
+	
+	method removeVisual(){
+		game.removeVisual(self)
+	}
 }
 
 class Auto inherits Vehiculo{
 	var property image = "A"+camino.dir().img()+"1.png"
 	
-	method imgDeDefault() = "A"+camino.dir().img()+"1.png"
+	method imgDeDefault() {
+	image = "A"+camino.dir().img()+"1.png"
+	}
 	
 	method animacion(){
 		image = "A"+camino.dir().img()+"2.png"
@@ -41,16 +51,30 @@ class Auto inherits Vehiculo{
 	}
 	
 	override method avanzar(){
-		self.animacion()
 		super()
+		self.animacion()
 	}
 	
 	override method esAuto() = true
 }
 
 class Tren inherits Vehiculo{
+	const vagones
 	var property image = "T"+camino.dir().img()+".png"
+    override method avanzar(){
+    	super()
+    	vagones.forEach{v => v.avanzar()}
+    }
 	
+	override method addVisual(){
+		super()
+		vagones.forEach{v => v.addVisual()}
+	}
+	
+	override method removeVisual(){
+		super()
+		vagones.forEach{v => v.removeVisual()}
+	}
 
 	
 }
