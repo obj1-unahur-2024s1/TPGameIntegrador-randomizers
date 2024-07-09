@@ -6,24 +6,22 @@ import nidoYHuevos.*
 import puntuacion.*
 
 object juego{
-	var property reiniciado = false
 	var property nivelQueJuega = null
 	var property estaEnMenu = true	
-	var property pausado = false
 	var property estaJugando = false
-	const sonido = game.sound("Musica pollo.mp3")
+	const musica = new Sonido(sonido = "Musica pollo.mp3")
 	const sonidoBoton = new Sonido(sonido = "menu-button.mp3")
-	const property carreteraR1 = new Carretera(y = 1, dir = derecha)
-	const property carreteraR2 = new Carretera(y = 5, dir = derecha)
-	const property carreteraL1 = new Carretera(y = 2, dir = izquierda)
-	const property carreteraL2 = new Carretera(y = 6, dir = izquierda)
-	const property rieles1 = new Carretera(y = 3, dir = derecha)
-	const property rieles2 = new Carretera(y = 4, dir = izquierda)
+	const carreteraR1 = new Carretera(y = 1, dir = derecha)
+	const carreteraR2 = new Carretera(y = 5, dir = derecha)
+	const carreteraL1 = new Carretera(y = 2, dir = izquierda)
+	const carreteraL2 = new Carretera(y = 6, dir = izquierda)
+	const rieles1 = new Carretera(y = 3, dir = derecha)
+	const rieles2 = new Carretera(y = 4, dir = izquierda)
 	const vehiculos = []
 	const huevos = [new Huevo(x = 4, y = 7), new Huevo(x = 5, y = 7), new Huevo(x = 6, y = 7)] 
 	
 	method iniciar(){
-		game.schedule(200, { sonido.play()} )
+		game.schedule(400, { self.reproducirMusica()} )
 		game.cellSize(90)
 		game.width(12)
 		game.height(9)
@@ -43,45 +41,20 @@ object juego{
     	self.agregarTrenes()
 		game.start()	}
 		
+	method reproducirMusica(){
+		musica.reproducir()
+		game.onTick(148000, "musica", {musica.reproducir()})
+	}	
+    
 	method pausar(){
 		if (estaJugando){
-		gallina.pausado()
-		if (pausado){
-			self.conducirVehiculos()
-			pausado = !pausado
-			game.removeVisual(fondo)
-			game.addVisual(fondo)
-			contador.nuevoContador()
-		}
-		else {
-			vehiculos.forEach({a => a.detener()})
-			pausado = !pausado
-			game.removeTickEvent("Contador")
-		}
+			pausa.pausar()
 		}
 	}
 	
 	method reiniciar(){
-		if (pausado){
-			self.pausar()
-		}
 		if (!estaEnMenu){
-			if (!estaJugando){
-				puntuacion.removeVisual()				
-				puntuacion.reset()
-				gallina.posInicial()
-				barraDeVida.reinicio()
-				if (nivelQueJuega == 1){
-					self.nivel1()
-				}
-				else {
-					self.nivel2()
-				}
-			}
-			else {
-				barraDeVida.perderVidas()
-				self.gameOver()
-			}
+			reinicio.reiniciar()
 		}
 	} 
 	
@@ -98,14 +71,15 @@ object juego{
 	
 	
 	method configurarGallina(){
-		if (!reiniciado){
+		if (!gallina.reiniciado()){
 			game.addVisual(gallina)
+			gallina.configurada()
 			gallina.posInicial()
 			keyboard.right().onPressDo{gallina.mover(derecha)}
 			keyboard.left().onPressDo{gallina.mover(izquierda)}
 			keyboard.up().onPressDo{gallina.mover(arriba)}
 			keyboard.down().onPressDo{gallina.mover(abajo)}
-			game.onCollideDo(gallina, {auto => auto.colicion()})
+			game.onCollideDo(gallina, {cosa => cosa.colicion()})
 			}
 		else {
 			game.addVisual(gallina)
@@ -115,8 +89,13 @@ object juego{
 	method conducirVehiculos(){
 		vehiculos.forEach({a => a.conducir(400)})
 	}
+	
+	method detenerVehiculos(){
+		vehiculos.forEach({a => a.detener()})
+	}
 		    
 	method configuracionDefault(){
+		    gallina.posInicial()
 		    estaEnMenu = false
 		    estaJugando = true
 		    game.removeVisual(menu)
@@ -134,11 +113,15 @@ object juego{
 	}
 	
 	method agregarTrenes(){
-		self.agregarVehiculos([new Tren(camino = rieles1, x = rieles1.dir().inicio(), vagones = [ new Vagon(camino = rieles1, x = rieles1.dir().inicio()-1), new Vagon(camino = rieles1, x = rieles1.dir().inicio()-2),
-							   new Vagon(camino = rieles1, x = rieles1.dir().inicio()-3)]),
-							   new Tren(camino = rieles2, x = rieles2.dir().inicio(), vagones = [new Vagon(camino = rieles2, x = rieles2.dir().inicio()+1),
-							   new Vagon(camino = rieles2, x = rieles2.dir().inicio()+2), new Vagon(camino = rieles2, x = rieles2.dir().inicio()+3)]) 
+		self.agregarVehiculos([new Tren(camino = rieles1, x = rieles1.dir().inicio()),
+							   new Tren(camino = rieles2, x = rieles2.dir().inicio())
 			                  ])
+	    vehiculos.get(0).agregarVagones([ new Vagon(camino = rieles1, x = rieles1.dir().inicio()-1),
+	    	                   new Vagon(camino = rieles1, x = rieles1.dir().inicio()-2),
+							   new Vagon(camino = rieles1, x = rieles1.dir().inicio()-3)])
+		vehiculos.get(1).agregarVagones([new Vagon(camino = rieles2, x = rieles2.dir().inicio()+1),
+							   new Vagon(camino = rieles2, x = rieles2.dir().inicio()+2), 
+							   new Vagon(camino = rieles2, x = rieles2.dir().inicio()+3)])
 	}
 	
 	method nivel1(){
@@ -171,14 +154,12 @@ object juego{
 	
 	method gameOver(){
 		self.removerImagenes()
-		reiniciado = true
-		gallina.posInicial()
 		menu.gameOver()   
 		game.addVisual(menu)
 		puntuacion.nuevoPuntaje(puntuacion.calculoPuntaje())
 		puntuacion.addVisual()
 		game.removeTickEvent("Contador")
-		vehiculos.forEach{a => a.detener()}
+		self.detenerVehiculos()
 		self.quitarAutos()
 		estaJugando = false
 	}
@@ -205,6 +186,59 @@ object juego{
 	}
 	method quitarAutos(){
 		vehiculos.forEach{v => if (v.esAuto()){vehiculos.remove(v)}}
+	}
+	method carreteraR1() = carreteraR1
+	method carreteraR2() = carreteraR2
+	method carreteraL2() = carreteraL2
+	method carreteraL1() = carreteraL1
+	method rieles1() = rieles1
+	method rieles2() = rieles2
+	
+}
+
+object pausa{
+	var property pausado = false
+			
+	method pausar(){
+		gallina.pausar()
+		if (pausado){
+			juego.conducirVehiculos()
+			pausado = !pausado
+			game.removeVisual(fondo)
+			game.addVisual(fondo)
+			contador.nuevoContador()
+		}
+		else {
+			juego.detenerVehiculos()
+			pausado = !pausado
+			game.removeTickEvent("Contador")
+		}
+	}			
+}
+
+object reinicio{
+	var property reiniciado = false
+	
+	method reiniciar(){
+		if (pausa.pausado()){
+			juego.pausar()
+		}
+		if (!juego.estaJugando()){
+			puntuacion.removeVisual()				
+			puntuacion.reset()
+			gallina.posInicial()
+			barraDeVida.reinicio()
+			if (juego.nivelQueJuega() == 1){
+				juego.nivel1()
+			}
+			else {
+				juego.nivel2()
+			}
+		}
+		else {
+			barraDeVida.perderVidas()
+			juego.gameOver()
+		}
 	}
 }
 

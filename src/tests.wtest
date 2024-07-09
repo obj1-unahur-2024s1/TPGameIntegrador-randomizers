@@ -1,13 +1,16 @@
 import juego.*
 import autos.*
+import gallina.*
+import nidoYHuevos.*
+import tablero.*
 
 describe "test de juego" {
 	const a1 = new Auto(camino = juego.carreteraR1(), x = 0)
-	const a2 = new Auto(camino = juego.carreteraR2(), x = 0)
+	const a2 = new Auto(camino = juego.carreteraL2(), x = 0)
 	const t1 = new Tren(camino = juego.rieles1(), x = 0, vagones = [ new Vagon(camino = juego.rieles1(), x = 0)])
 	
-	test "se le pregunta a juego si esta reiniciado y responde true"{
-		assert.equals(false, juego.reiniciado())
+	test "se le pregunta a reinicio si esta reiniciado y responde false"{
+		assert.equals(false, reinicio.reiniciado())
 	}
 	test "se le pregunta a juego el nivel que juega y responde null"{
 		assert.equals(null, juego.nivelQueJuega())
@@ -15,7 +18,7 @@ describe "test de juego" {
 	test "se le pregunta a juego si esta en menu y responde true"{
 		assert.equals(true, juego.estaEnMenu())
 	}
-	test "se le pregunta a juego si esta pausado y responde false"{
+	test "se le pregunta a juego si esta estaJugando y responde false"{
 		assert.equals(false, juego.estaJugando())
 	}
 	test "se le pregunta juego cuantos vehiculos tiene y responde 0"{
@@ -36,6 +39,53 @@ describe "test de juego" {
 	test "se agregan los trenes a juego y ahora tiene 2 vehiculos"{
 		juego.agregarTrenes()
 		assert.equals(2, juego.vehiculosSize())
+	}
+	
+	test "se le pregunta a a2 si es auto y responde true"{
+		assert.that(a2.esAuto())
+	}
+	
+	test "se le pregunta a t1 si es auto y responde false"{
+		assert.notThat(t1.esAuto())
+	}
+	
+	test "se le pregunta a la gallina si tiene huevo y responde false"{
+		assert.notThat(gallina.tieneHuevo())
+	}
+	
+	test "se le pregunta a la gallina si fue reiniciaciada y responde false"{
+		assert.notThat(gallina.reiniciado())
+	}
+	
+	test "se le pregunta a la gallina si esta pausada y responde false"{
+		assert.notThat(gallina.pausado())
+	}
+	
+	test "se configura a la gallina y se le pregunta si fue reiniciaciada y responde true"{
+		gallina.configurada()
+		assert.that(gallina.reiniciado())
+	}
+	
+	test "se pausa a la gallina y se le pregunta si fue reiniciaciada y responde true"{
+		gallina.pausar()
+		assert.that(gallina.pausado())
+	}
+	
+	test "se le pregunta a nido cuantos huevos tiene y reponde 0"{
+		assert.equals(0, nido.cantidadHuevos())
+	}
+	
+	test "se le pregunta a puasa si esta pausado y responde false"{
+		assert.notThat(pausa.pausado())
+	}
+	
+	test "se le pregunta a BarraDeVida cuantas vidas tiene y responde 3"{
+		assert.equals(3, barraDeVida.vidas())
+	}
+	
+	test "barra de vida pierde una vida por lo que ahora tiene 2"{
+		barraDeVida.perderVida()
+		assert.equals(2, barraDeVida.vidas())
 	}
 	
 }

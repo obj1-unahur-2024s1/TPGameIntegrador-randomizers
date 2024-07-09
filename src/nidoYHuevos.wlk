@@ -7,7 +7,6 @@ object nido {
 
 	var property image = "Nido0.png"
 	method position() = game.origin()
-	method cantidadHuevos() = cantidadHuevos
 	method colicion(){
 		if (gallina.tieneHuevo()){
 			cantidadHuevos  += 1

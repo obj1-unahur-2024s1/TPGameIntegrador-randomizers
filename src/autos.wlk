@@ -6,7 +6,7 @@ class Vehiculo{
 	const camino
 	const x
 	var property position = game.at(x, camino.position().y()) 
-	var pInicial = camino.position()
+	const pInicial = camino.position()
 	
 	method avanzar(){
 		if (self.position().x() == camino.dir().final()){
@@ -59,8 +59,8 @@ class Auto inherits Vehiculo{
 }
 
 class Tren inherits Vehiculo{
-	const vagones
-	var property image = "T"+camino.dir().img()+".png"
+	const vagones = []
+	method image() = "T"+camino.dir().img()+".png"
     override method avanzar(){
     	super()
     	vagones.forEach{v => v.avanzar()}
@@ -75,11 +75,13 @@ class Tren inherits Vehiculo{
 		super()
 		vagones.forEach{v => v.removeVisual()}
 	}
-
 	
+	method agregarVagones(vnes){
+		vagones.addAll(vnes)
+	}
 }
 
 class Vagon inherits Vehiculo{
-	var property image = "V" + camino.dir().img() + ".png"
+	method image()  = "V" + camino.dir().img() + ".png"
 }
 

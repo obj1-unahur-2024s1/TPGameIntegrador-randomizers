@@ -10,11 +10,16 @@ object gallina {
 	var dirMira = abajo
 	var property image = "GU01.png"
 	var property tieneHuevo = false
-	var huevo 
-	var pausado = false
+	var huevo = null
+	var property pausado = false
+	var property reiniciado = false
 	
-	method pausado(){
+	method pausar(){
 		pausado = !pausado
+	}
+	
+	method configurada(){
+		reiniciado = !reiniciado
 	}
 	method mover(dir){
 		if (!pausado){
@@ -48,7 +53,7 @@ object gallina {
 	}
 	
 	method chocada(){
-		var pluma = new Pluma()
+		const pluma = new Pluma()
 		pluma.aparecerEn(self.position().x(), self.position().y())
 		grito.reproducir()
 		self.posInicial()
@@ -63,6 +68,7 @@ object gallina {
 	
 	method posInicial(){
 		position = game.at(4,0)
+		image = "GU01.png"
 	}
 	
 	method agarrarHuevo(egg){
